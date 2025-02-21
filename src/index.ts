@@ -2,8 +2,25 @@ import { Hono } from "hono";
 import { sendMailSMTP } from "./mailservice";
 import { z } from "zod";
 import { ACCESS_KEY, MAXEMAILS } from "./config";
+import { cors } from "hono/cors";
 
 const app = new Hono();
+
+app.use(
+  "*",
+  cors({
+    origin: ["https://amiminn.my.id", "http://localhost:59354"],
+    allowHeaders: ["Content-Type", "access-key"],
+  })
+);
+
+app.get("/", (c: any) => {
+  return c.json({
+    author: "amiminn",
+    official: "https://amiminn.my.id",
+    github: "https://github.com/amiminn",
+  });
+});
 
 app.use("*", async (c, next) => {
   const accessKey = c.req.header("access-key");
