@@ -82,7 +82,7 @@ app.all("*", (c) => {
 });
 
 export default {
-  port: 59110,
+  port: 3000,
   fetch: app.fetch,
 };
 
